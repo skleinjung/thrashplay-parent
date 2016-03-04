@@ -45,7 +45,6 @@
         <url>https://github.com/skleinjung/thrashplay-parent</url>
         <connection>scm:git:https://github.com/skleinjung/thrashplay-parent.git</connection>
         <developerConnection>scm:git:https://github.com/skleinjung/thrashplay-parent.git</developerConnection>
-      <tag>thrashplay-parent-2</tag>
   </scm>
 
     <distributionManagement>
