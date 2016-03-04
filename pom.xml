@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.thrashplay</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>thrashplay-parent</artifactId>
     <version>1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
