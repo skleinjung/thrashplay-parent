@@ -19,7 +19,7 @@
 
     <groupId>com.thrashplay</groupId>
     <artifactId>thrashplay-parent</artifactId>
-    <version>2</version>
+    <version>3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Thrashplay Parent POM</name>
