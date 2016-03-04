@@ -44,9 +44,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/skleinjung/thrashplay-parent</url>
-        <connection>scm:git:https://github.com/skleinjung/thrashplay-parent.git</connection>
-        <developerConnection>scm:git:https://github.com/skleinjung/thrashplay-parent.git</developerConnection>
+        <url>http://github.com/skleinjung/${project.artifactId}</url>
+        <connection>scm:git:git://github.com/skleinjung/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:git@github.com:skleinjung/${project.artifactId}.git</developerConnection>
     </scm>
 
     <distributionManagement>
