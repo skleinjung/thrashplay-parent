@@ -43,8 +43,8 @@
 
     <scm>
         <url>https://github.com/skleinjung/thrashplay-parent</url>
-        <connection>git@github.com:skleinjung/thrashplay-parent.git</connection>
-        <developerConnection>git@github.com:skleinjung/thrashplay-parent.git</developerConnection>
+        <connection>scm:git:git@git@github.com:skleinjung/thrashplay-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:skleinjung/thrashplay-parent.git</developerConnection>
     </scm>
 
     <distributionManagement>
