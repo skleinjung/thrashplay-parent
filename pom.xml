@@ -19,7 +19,7 @@
 
     <groupId>com.thrashplay</groupId>
     <artifactId>thrashplay-parent</artifactId>
-    <version>4-SNAPSHOT</version>
+    <version>4</version>
     <packaging>pom</packaging>
 
     <name>Thrashplay Parent POM</name>
@@ -45,7 +45,8 @@
         <url>https://github.com/skleinjung/thrashplay-parent</url>
         <connection>scm:git:git@git@github.com:skleinjung/thrashplay-parent.git</connection>
         <developerConnection>scm:git:git@github.com:skleinjung/thrashplay-parent.git</developerConnection>
-    </scm>
+      <tag>thrashplay-parent-4</tag>
+  </scm>
 
     <distributionManagement>
         <repository>
