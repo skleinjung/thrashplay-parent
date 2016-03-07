@@ -43,10 +43,10 @@
 
     <scm>
         <url>https://github.com/skleinjung/thrashplay-parent</url>
-        <connection>scm:git:git@git@github.com:skleinjung/thrashplay-parent.git</connection>
+        <connection>scm:git:git@github.com:skleinjung/thrashplay-parent.git</connection>
         <developerConnection>scm:git:git@github.com:skleinjung/thrashplay-parent.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <distributionManagement>
         <repository>
@@ -64,10 +64,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <sourceReleaseAssemblyDescriptor>source-release</sourceReleaseAssemblyDescriptor>
 
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
     <build>
