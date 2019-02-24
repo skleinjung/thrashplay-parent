@@ -12,7 +12,7 @@ steps:
 
 - name: 'gcr.io/cloud-builders/mvn'
   id: Compile and package project
-  args: ['--settings', 'build/settings.xml', 'deploy']
+  args: ['--settings', 'build/settings.xml', '--batch-mode', 'release:prepare', 'release:perform']
 
 secrets:
 - kmsKeyName: projects/shard-232101/locations/global/keyRings/dev/cryptoKeys/google-cloud-builds-key
