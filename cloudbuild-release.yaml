@@ -1,5 +1,5 @@
 steps:
-- name: 'gcr.io/shard-232101/init-thrashplay-build-environment-builder'
+- name: 'gcr.io/shard-232101/init-thrashplay-build'
   id: Initialize credentials and settings
 
 - name: 'gcr.io/cloud-builders/mvn'
