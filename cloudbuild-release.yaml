@@ -1,15 +1,13 @@
 steps:
 - name: 'gcr.io/shard-232101/init-thrashplay-build'
   id: Initialize credentials and settings
+  volumes:
+  - name: 'root'
+    path: '/root'
 
 - name: 'gcr.io/cloud-builders/mvn'
   id: Compile and release project
-  entrypoint: /bin/bash
-  args:
-  - '-c'
-  - |
-    ssh -T github.com && \
-    mvn --batch-mode release:prepare release:perform
-
-
-#args: ['--batch-mode', 'release:prepare', 'release:perform']
+  args: ['--batch-mode', 'release:prepare', 'release:perform']
+  volumes:
+  - name: 'root'
+    path: '/root'
