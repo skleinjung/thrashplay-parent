@@ -1,18 +1,8 @@
-steps:
-- name: 'perl:5'
-  id: Configure Maven settings
-  entrypoint: bash
-  args:
-  - '-c'
-  - |
-    echo "MAVEN CONFIG: $$MAVEN_CONFIG"
-    PATTERN="$$NEXUS_PASSWORD" perl -p -e 's/NEXUS_PASSWORD/$$ENV{PATTERN}/g' build/settings.xml.tpl > build/settings.xml
+- name: 'gcr.io/shard-232101/maven-cloud-builder'
+  id: Compile and package project
+  args: ['deploy']
   secretEnv:
   - 'NEXUS_PASSWORD'
-
-- name: 'gcr.io/cloud-builders/mvn'
-  id: Compile and package project
-  args: ['--settings', 'build/settings.xml', 'deploy']
 
 secrets:
 - kmsKeyName: projects/shard-232101/locations/global/keyRings/dev/cryptoKeys/google-cloud-builds-key
