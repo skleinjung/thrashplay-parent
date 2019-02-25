@@ -4,4 +4,4 @@ steps:
 
 - name: 'gcr.io/cloud-builders/mvn'
   id: Compile and release project
-  args: ['--batch-mode', 'release:prepare', 'release:perform']
+  args: ['-X', '--batch-mode', 'release:prepare', 'release:perform']
