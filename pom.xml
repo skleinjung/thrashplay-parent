@@ -45,7 +45,7 @@
     </distributionManagement>
 
     <properties>
-        <project.scm.id>github.com<project.scm.id>
+        <project.scm.id>github.com</project.scm.id>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
