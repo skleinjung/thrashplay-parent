@@ -11,3 +11,9 @@ steps:
   volumes:
   - name: 'root'
     path: '/root'
+
+- name: 'gcr.io/shard-232101/save-local-repository'
+  id: Cache local repository to cloud storage
+  volumes:
+  - name: 'root'
+    path: '/root'
