@@ -4,4 +4,12 @@ steps:
 
 - name: 'gcr.io/cloud-builders/mvn'
   id: Compile and release project
-  args: ['--batch-mode', 'release:prepare', 'release:perform']
+  entrypoint: /bin/bash
+  args:
+  - '-c'
+  - |
+    ssh -T github.com && \
+    mvn --batch-mode release:prepare release:perform
+
+
+#args: ['--batch-mode', 'release:prepare', 'release:perform']
