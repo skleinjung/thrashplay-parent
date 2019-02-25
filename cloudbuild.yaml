@@ -1,11 +1,7 @@
 steps:
-- name: 'gcr.io/shard-232101/maven-cloud-builder'
-  id: Compile and package project
-  args: ['deploy']
-  secretEnv:
-  - 'NEXUS_PASSWORD'
+- name: 'gcr.io/shard-232101/init-thrashplay-build-environment-builder'
+  id: Initialize credentials and settings
 
-secrets:
-- kmsKeyName: projects/shard-232101/locations/global/keyRings/dev/cryptoKeys/google-cloud-builds-key
-  secretEnv:
-    NEXUS_PASSWORD: 'CiQAseTHTAs7FGbHQUxTJlgJxbQbOhhvzw5+ujbOELVZP3+XX4ISOQDz/FGDbBTKSxt0MfKKkZGb+8XZTepH+iD6DmuDhrHHVzyB0wyUIJRxgKytvxw9a/5X/6o9vZ0l2Q=='
+- name: 'gcr.io/cloud-builders/mvn'
+  id: Compile and deploy project
+  args: ['deploy']
