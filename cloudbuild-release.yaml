@@ -5,3 +5,7 @@ steps:
 - name: 'gcr.io/cloud-builders/mvn'
   id: Compile and release project
   args: ['-X', '--batch-mode', 'release:prepare', 'release:perform']
+
+- name: 'gcr.io/cloud-builders/git'
+  id: Compile and release project
+  args: ['push', '--tags']
