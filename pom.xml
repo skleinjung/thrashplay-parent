@@ -173,6 +173,7 @@
                     </dependencies>
                     <configuration>
                         <tagNameFormat>tags/releases/@{project.version}</tagNameFormat>
+                        <scmCommentPrefix>[Automated Release]${line.separator}[skip ci]${line.separator}</scmCommentPrefix>
                     </configuration>
                 </plugin>
                 <plugin>
