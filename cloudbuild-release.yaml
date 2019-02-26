@@ -1,5 +1,5 @@
 steps:
-- name: 'gcr.io/shard-232101/init-thrashplay-build:0.10'
+- name: 'gcr.io/shard-232101/init-thrashplay-build:0.11'
   id: Initialize credentials and settings
   volumes:
   - name: 'root'
@@ -12,7 +12,7 @@ steps:
   - name: 'root'
     path: '/root'
 
-- name: 'gcr.io/shard-232101/save-local-repository:0.10'
+- name: 'gcr.io/shard-232101/save-local-repository:0.11'
   id: Cache local repository to cloud storage
   volumes:
   - name: 'root'
