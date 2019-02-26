@@ -1,6 +1,8 @@
 steps:
 - name: 'gcr.io/shard-232101/init-thrashplay-build:0.11'
   id: Initialize credentials and settings
+  env:
+  - 'DEPLOY_KEY=/thrashplay-dev/secrets/deploy_keys/thrashplay-parent.id_rsa.enc'
   volumes:
   - name: 'root'
     path: '/root'
@@ -8,8 +10,6 @@ steps:
 - name: 'gcr.io/cloud-builders/mvn'
   id: Compile and release project
   args: ['--batch-mode', 'release:prepare', 'release:perform']
-  env:
-  - 'DEPLOY_KEY=/thrashplay-dev/secrets/deploy_keys/thrashplay-parent.id_rsa.enc'
   volumes:
   - name: 'root'
     path: '/root'
