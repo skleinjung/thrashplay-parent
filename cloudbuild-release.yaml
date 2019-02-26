@@ -8,6 +8,8 @@ steps:
 - name: 'gcr.io/cloud-builders/mvn'
   id: Compile and release project
   args: ['--batch-mode', 'release:prepare', 'release:perform']
+  env:
+  - 'DEPLOY_KEY=/thrashplay-dev/secrets/deploy_keys/thrashplay-parent.id_rsa.enc'
   volumes:
   - name: 'root'
     path: '/root'
