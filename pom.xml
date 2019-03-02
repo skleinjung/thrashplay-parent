@@ -3,15 +3,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.thrashplay</groupId>
-    <artifactId>thrashplay-parent</artifactId>
+    <artifactId>thrashplay-base-parent</artifactId>
     <version>19-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Thrashplay Parent POM</name>
+    <name>Thrashplay Base Parent POM</name>
     <description>
         Parent POM used by Thrashplay projects.
     </description>
     <url>http://www.thrashplay.com/</url>
+
+    <modules>
+        <module>thrashplay-parent</module>
+        <module>thrashplay-parent-internal</module>
+    </modules>
 
     <organization>
         <name>Thrashplay</name>
@@ -54,6 +59,8 @@
 
         <nexus.url>https://nexus.thrashplay.com</nexus.url>
 
+        <docker.image.prefix>gcr.io</docker.image.prefix>
+
         <!-- plugin versions -->
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
@@ -75,7 +82,10 @@
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.2.2</maven-war-plugin.version>
+
         <nexus-staging-maven-plugin.version>1.5.1</nexus-staging-maven-plugin.version>
+        <dockerfile-maven-plugin.version>1.4.10</dockerfile-maven-plugin.version>
+        <git-commit-id-plugin.version>2.2.5</git-commit-id-plugin.version>
     </properties>
 
     <build>
@@ -85,7 +95,25 @@
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <version>${nexus-staging-maven-plugin.version}</version>
             </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git-commit-id-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>get-git-revision</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dotGitDirectory>${maven.multiModuleProjectDirectory}/.git</dotGitDirectory>
+                    <skipPoms>false</skipPoms>
+                </configuration>
+            </plugin>
         </plugins>
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -166,7 +194,8 @@
                     <version>${maven-release-plugin.version}</version>
                     <configuration>
                         <tagNameFormat>tags/releases/@{project.version}</tagNameFormat>
-                        <scmCommentPrefix>[Automated Release]${line.separator}[skip ci]${line.separator}</scmCommentPrefix>
+                        <scmCommentPrefix>[Automated Release] [skip ci]${line.separator}</scmCommentPrefix>
+                        <releaseProfiles>release-docker-images</releaseProfiles>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -189,48 +218,90 @@
                     <artifactId>maven-war-plugin</artifactId>
                     <version>${maven-war-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>dockerfile-maven-plugin</artifactId>
+                    <version>${dockerfile-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>docker-image-build</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                                <goal>push</goal>
+                            </goals>
+                            <configuration>
+                                <tag>${git.commit.id}</tag>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>docker-image-tag-latest</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>tag</goal>
+                                <goal>push</goal>
+                            </goals>
+                            <configuration>
+                                <tag>latest</tag>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <repository>${docker.image.prefix}/${gcloud.project.id}/${project.artifactId}</repository>
+                        <pullNewerImage>false</pullNewerImage>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
 
     <profiles>
         <profile>
-            <id>release.version</id>
-            <properties>
-                <!--<jenkins.buildNumber>${env.BUILD_NUMBER}</jenkins.buildNumber>-->
-                <jenkins.buildNumber>123</jenkins.buildNumber>
-            </properties>
+            <id>release-docker-images</id>
             <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>build-helper-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>parse-version</id>
-                                <goals>
-                                    <goal>parse-version</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>versions-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>set release version</id>
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>set</goal>
-                                </goals>
-                                <configuration>
-                                    <newVersion>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${jenkins.buildNumber}</newVersion>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.spotify</groupId>
+                            <artifactId>dockerfile-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>docker-image-build</id>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>build</goal>
+                                        <goal>push</goal>
+                                    </goals>
+                                    <configuration>
+                                        <tag>${git.commit.id}</tag>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>docker-image-tag-latest</id>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>tag</goal>
+                                        <goal>push</goal>
+                                    </goals>
+                                    <configuration>
+                                        <tag>latest</tag>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>tag-docker-image-with-version</id>
+                                    <phase>deploy</phase>
+                                    <goals>
+                                        <goal>tag</goal>
+                                        <goal>push</goal>
+                                    </goals>
+                                    <configuration>
+                                        <tag>${project.version}</tag>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
             </build>
         </profile>
     </profiles>
