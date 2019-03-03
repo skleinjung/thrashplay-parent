@@ -37,10 +37,12 @@
                 <artifactId>flatten-maven-plugin</artifactId>
                 <configuration>
                     <pomElements>
-                        <parent>resolve</parent>
-                        <build>resolve</build>
-                        <dependencyManagement>resolve</dependencyManagement>
-                        <properties>resolve</properties>
+                        <scm>keep</scm>
+                        <distributionManagement>keep</distributionManagement>
+                        <parent>keep</parent>
+                        <build>keep</build>
+                        <dependencyManagement>keep</dependencyManagement>
+                        <properties>keep</properties>
                     </pomElements>
                 </configuration>
             </plugin>
