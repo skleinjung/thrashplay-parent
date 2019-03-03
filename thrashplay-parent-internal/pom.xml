@@ -39,7 +39,7 @@
                     <pomElements>
                         <scm>keep</scm>
                         <distributionManagement>keep</distributionManagement>
-                        <parent>keep</parent>
+                        <parent>resolve</parent>
                         <build>keep</build>
                         <dependencyManagement>keep</dependencyManagement>
                         <properties>keep</properties>
