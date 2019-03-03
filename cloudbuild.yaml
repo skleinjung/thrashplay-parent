@@ -1,6 +1,7 @@
 steps:
-- name: 'gcr.io/shard-232101/init-thrashplay-build:0.24'
+- name: 'gcr.io/shard-232101/build-helpers:0.25.219'
   id: Initialize credentials and settings
+  args: ['init']
   env:
   - 'DEPLOY_KEY=/thrashplay-dev/secrets/deploy_keys/thrashplay-parent.id_rsa.enc'
   volumes:
@@ -8,15 +9,23 @@ steps:
     path: '/root'
 
 - name: 'gcr.io/cloud-builders/mvn'
-  id: Compile and deploy project
-  args: ['deploy']
+  id: Deploy new versions of POMs and docker images
+  entrypoint: /bin/bash
+  args: ['-c', 'mvn -Drevision=.$$(cat BUILD_NUMBER) deploy']
   volumes:
   - name: 'root'
     path: '/root'
 
-- name: 'gcr.io/shard-232101/save-local-repository:0.24'
-  id: Cache local repository to cloud storage
+- name: 'gcr.io/shard-232101/build-helpers:0.25.219'
+  id: Tag new build
+  args: ['tag']
   volumes:
   - name: 'root'
     path: '/root'
 
+- name: 'gcr.io/shard-232101/build-helpers:0.25.219'
+  id: Save local repository
+  args: ['push-repository']
+  volumes:
+  - name: 'root'
+    path: '/root'

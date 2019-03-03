@@ -4,7 +4,7 @@
 
     <groupId>com.thrashplay</groupId>
     <artifactId>thrashplay-base-parent</artifactId>
-    <version>20-SNAPSHOT</version>
+    <version>1.0.0${revision}</version>
     <packaging>pom</packaging>
 
     <name>Thrashplay Base Parent POM</name>
@@ -50,6 +50,8 @@
     </distributionManagement>
 
     <properties>
+        <revision>-SNAPSHOT</revision>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -75,7 +77,6 @@
         <maven-invoker-plugin.version>3.1.0</maven-invoker-plugin.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
-        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
         <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
@@ -86,6 +87,7 @@
         <nexus-staging-maven-plugin.version>1.5.1</nexus-staging-maven-plugin.version>
         <dockerfile-maven-plugin.version>1.4.10</dockerfile-maven-plugin.version>
         <git-commit-id-plugin.version>2.2.5</git-commit-id-plugin.version>
+        <flatten-maven.plugin.version>1.0.0</flatten-maven.plugin.version>
     </properties>
 
     <build>
@@ -228,7 +230,6 @@
                             <phase>package</phase>
                             <goals>
                                 <goal>build</goal>
-                                <goal>push</goal>
                             </goals>
                             <configuration>
                                 <tag>${git.commit.id}</tag>
@@ -239,7 +240,6 @@
                             <phase>package</phase>
                             <goals>
                                 <goal>tag</goal>
-                                <goal>push</goal>
                             </goals>
                             <configuration>
                                 <tag>latest</tag>
@@ -250,6 +250,30 @@
                         <repository>${docker.image.prefix}/${gcloud.project.id}/${project.artifactId}</repository>
                         <pullNewerImage>false</pullNewerImage>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>${flatten-maven.plugin.version}</version>
+                    <configuration>
+                        <updatePomFile>true</updatePomFile>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>flatten</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>flatten</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>flatten.clean</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -269,7 +293,7 @@
                                     <id>docker-image-build</id>
                                     <phase>package</phase>
                                     <goals>
-                                        <goal>build</goal>
+                                        <goal>tag</goal>
                                         <goal>push</goal>
                                     </goals>
                                     <configuration>

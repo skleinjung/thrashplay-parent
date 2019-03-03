@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.thrashplay</groupId>
         <artifactId>thrashplay-base-parent</artifactId>
-        <version>20-SNAPSHOT</version>
+        <version>1.0.0${revision}</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -29,4 +29,23 @@
             <url>${nexus.url}/repository/thrashplay-internal-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <configuration>
+                    <pomElements>
+                        <scm>keep</scm>
+                        <distributionManagement>keep</distributionManagement>
+                        <parent>resolve</parent>
+                        <build>keep</build>
+                        <dependencyManagement>keep</dependencyManagement>
+                        <properties>keep</properties>
+                    </pomElements>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
