@@ -24,7 +24,7 @@ steps:
     path: '/root'
 
 - name: 'gcr.io/shard-232101/build-helpers:0.25.219'
-  id: Tag new build
+  id: Save local repository
   args: ['push-repository']
   volumes:
   - name: 'root'
