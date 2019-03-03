@@ -4,7 +4,7 @@
 
     <groupId>com.thrashplay</groupId>
     <artifactId>thrashplay-base-parent</artifactId>
-    <version>19${revision}</version>
+    <version>1.0.0${revision}</version>
     <packaging>pom</packaging>
 
     <name>Thrashplay Base Parent POM</name>
@@ -113,30 +113,6 @@
                     <dotGitDirectory>${maven.multiModuleProjectDirectory}/.git</dotGitDirectory>
                     <skipPoms>false</skipPoms>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>${flatten-maven.plugin.version}</version>
-                <configuration>
-                    <updatePomFile>true</updatePomFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
 
@@ -274,6 +250,30 @@
                         <repository>${docker.image.prefix}/${gcloud.project.id}/${project.artifactId}</repository>
                         <pullNewerImage>false</pullNewerImage>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>${flatten-maven.plugin.version}</version>
+                    <configuration>
+                        <updatePomFile>true</updatePomFile>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>flatten</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>flatten</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>flatten.clean</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
