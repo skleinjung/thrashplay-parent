@@ -4,7 +4,7 @@
 
     <groupId>com.thrashplay</groupId>
     <artifactId>thrashplay-base-parent</artifactId>
-    <version>1.0.0${revision}</version>
+    <version>1.0.1${revision}</version>
     <packaging>pom</packaging>
 
     <name>Thrashplay Base Parent POM</name>
